@@ -106,3 +106,5 @@ dist
 #vscode
 .history
 .vscode
+
+.DS_Store
