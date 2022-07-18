@@ -109,3 +109,4 @@ dist
 
 .DS_Store
 /.expo/web/cache
+config.js
