@@ -8,14 +8,17 @@ import { View, Button, Text, StyleSheet, Alert, Image } from "react-native";
 import { Colors } from "../../constants/color";
 import OutlinedButton from "../UI/OutlinedButton";
 
-function ImagePicker() {
+function ImagePicker({ onImageTaken }) {
   const [pickedImage, setPickedImage] = useState();
 
   const [cameraPermissionInformation, requestPermission] =
     useCameraPermissions();
 
   async function verifyPermissions() {
-    if (cameraPermissionInformation.status === PermissionStatus.UNDETERMINED) {
+    if (
+      cameraPermissionInformation.status === PermissionStatus.UNDETERMINED ||
+      cameraPermissionInformation.status === PermissionStatus.DENIED
+    ) {
       const permissionResponse = await requestPermission();
       return permissionResponse.granted;
     }
@@ -45,6 +48,7 @@ function ImagePicker() {
     });
 
     setPickedImage(image.uri);
+    onImageTaken(image.uri);
   }
 
   let imagePreview = <Text>No image taken yet.</Text>;
